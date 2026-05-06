@@ -15,19 +15,19 @@ def img2text(url):
 
 # text2story
 def text2story(text):
-    story_text = ""   # to be completed
+    story_text = ""   
     return story_text
 
 # text2audio
 def text2audio(story_text):
-    audio_data = ""     # to be completed
+    audio_data = ""    
     return audio_data
 
 # def main
 def main(): 
   
     # App title
-    st.title("Streamlit Demo on Hugging Face")
+    st.title("Storytelling for ")
     
     # Write some text
     st.write("Welcome to a demo app showcasing basic Streamlit components!")
