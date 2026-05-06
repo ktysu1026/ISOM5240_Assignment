@@ -1,7 +1,10 @@
 # Import part
 import streamlit as st
 from PIL import Image
-import time
+from transformers import pipeline
+import gtts
+from io import BytesIO
+import base64
 
 # Function part
 # img2text
