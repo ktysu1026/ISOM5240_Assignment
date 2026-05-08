@@ -4,7 +4,6 @@ from PIL import Image
 from transformers import pipeline
 import gtts
 from io import BytesIO
-import base64
 
 # Function part
 # img2text
@@ -13,36 +12,40 @@ def img2text(url):
     text = image_to_text_model(url)[0]["generated_text"]
     return text
 
+# Difficulties faced during project:
+# Story not finished: asked LLM, potential method to solve is to add tokens or add parameters to the generator of text2story function
+# to encourage completion. 
+
 # text2story
 def text2story(description, age_choice):
     # Convert age_range (e.g., "3-4 years") to match expected format
     # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
-    # Build prompt based on age
+    # Clear instruction to write a complete story
     if age_choice == "3-4 years":
-        prompt = f"child friendly story about a happy {description}. simple words: "
+        prompt = f"Tell a complete short story about a happy {description}: "
     elif age_choice == "5-6 years":
-        prompt = f"adventure story for kids about {description}: "
+        prompt = f"Tell a complete fun story for kids about {description}: "
     else:
-        prompt = f"hero story for children about {description}: "
-    
-    # Load model with specific revision for stability
+        prompt = f"Tell a complete interesting and adventurous story for children about {description}: "
+
+     # Load model with specific revision for stability
     generator = pipeline(
         "text-generation", 
         model="pranavpsv/genre-story-generator-v2",
         revision="main"
     )
     
-    # Generate with explicit parameters
+    # Generate with enough tokens for a complete story
     story_results = generator(
         prompt, 
-        max_new_tokens=100, 
-        min_new_tokens=50, 
+        max_new_tokens=350,  # Generous limit for 100-150 word story
+        min_new_tokens=150,
         do_sample=True, 
-        temperature=0.7,
-        truncation=True  # Add this to handle long prompts
+        temperature=0.8,  # Slightly higher for more creativity
+        top_p=0.9
     )
-    
+
     # Extract story text safely
     if isinstance(story_results, list) and len(story_results) > 0:
         if isinstance(story_results[0], dict):
@@ -60,10 +63,31 @@ def text2story(description, age_choice):
     return story
 
 def text2audio(story_text):
-    # Using the specific model you requested
     pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
-    audio_output = pipe(story_text)
-    return audio_output
+        audio_output = pipe(story_text)
+        
+        audio_array = audio_output["audio"]
+        sampling_rate = audio_output["sampling_rate"]
+        
+        # Convert to proper format
+        if audio_array.dtype != np.int16:
+            audio_array = (audio_array * 32767).astype(np.int16)
+        
+        buffer = BytesIO()
+        wav.write(buffer, sampling_rate, audio_array)
+        buffer.seek(0)
+        return buffer
+        
+    except Exception as e:
+        # Fallback to gTTS if the pipeline fails
+        print(f"Pipeline failed, using gTTS: {e}")
+        from gtts import gTTS
+        
+        tts = gTTS(text=story_text, lang='en', slow=False)
+        buffer = BytesIO()
+        tts.write_to_fp(buffer)
+        buffer.seek(0)
+        return buffer
     
 # def main
 def main(): 
@@ -107,7 +131,7 @@ def main():
             st.write(story)
             
             st.subheader("🎧 Listen")
-            st.audio(audio_data, format="audio/mp3")
+            st.audio(audio_data)
 
 # Main part
 if __name__ == "__main__":
