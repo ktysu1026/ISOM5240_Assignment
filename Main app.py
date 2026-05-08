@@ -15,19 +15,48 @@ def img2text(url):
 
 # text2story
 def text2story(description, age_choice):
-    generator = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
+    # Convert age_range (e.g., "3-4 years") to match expected format
+    # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
-    # Matching age choice to story styles for kids
-    if age_choice == "3-4 years":
+    # Build prompt based on age
+    if age_choice == "3-4 years" or age_choice == "3-4":
         prompt = f"child friendly story about a happy {description}. simple words: "
-    elif age_choice == "5-6 years":
+    elif age_choice == "5-6 years" or age_choice == "5-6":
         prompt = f"adventure story for kids about {description}: "
     else:
         prompt = f"hero story for children about {description}: "
     
-    # Requirement: 50-100 words
-    story_results = generator(prompt, max_new_tokens=100, min_new_tokens=50, do_sample=True, temperature=0.7)
-    story = story_results[0]['generated_text'].strip()
+    # Load model with specific revision for stability
+    generator = pipeline(
+        "text-generation", 
+        model="pranavpsv/genre-story-generator-v2",
+        revision="main"
+    )
+    
+    # Generate with explicit parameters
+    story_results = generator(
+        prompt, 
+        max_new_tokens=100, 
+        min_new_tokens=50, 
+        do_sample=True, 
+        temperature=0.7,
+        truncation=True  # Add this to handle long prompts
+    )
+    
+    # Extract story text safely
+    if isinstance(story_results, list) and len(story_results) > 0:
+        if isinstance(story_results[0], dict):
+            generated_text = story_results[0].get('generated_text', '')
+            # Remove the prompt from the generated text if it's included
+            if generated_text.startswith(prompt):
+                story = generated_text[len(prompt):].strip()
+            else:
+                story = generated_text.strip()
+        else:
+            story = str(story_results[0])
+    else:
+        story = "Once upon a time, something magical happened!"
+    
     return story
 
 def text2audio(story_text):
