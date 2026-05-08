@@ -75,17 +75,24 @@ def text2story(description, age_choice):
     return story
 
 def text2audio(story_text):
+    # Initialize pipeline
     pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
     audio_output = pipe(story_text)
     
     audio_array = audio_output["audio"]
-    sampling_rate = audio_output["sampling_rate"]
+    sampling_rate = int(audio_output["sampling_rate"]) # Ensure this is an int
     
-    # Convert to proper format (float32 -> int16)
+    # 1. Handle potential 2D output (squeeze to 1D if necessary)
+    audio_array = np.squeeze(audio_array)
+    
+    # 2. Convert float32 to int16 correctly
     if audio_array.dtype != np.int16:
+        # Clip to avoid wrap-around distortion before converting
+        audio_array = np.clip(audio_array, -1.0, 1.0)
         audio_array = (audio_array * 32767).astype(np.int16)
     
     buffer = BytesIO()
+    # Scipy expects (buffer, rate, data)
     wav.write(buffer, sampling_rate, audio_array)
     buffer.seek(0)
     return buffer
