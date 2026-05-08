@@ -66,17 +66,11 @@ def text2story(description, age_choice):
     else:
     # Fallback stories with approximate word counts based on the playground/park scene
     if age_choice == "3-4 years":
-        story = f"Once upon a time, many happy children played together in a sunny park. They laughed on the swings and slid down the big slide. 
-        Everyone smiled and had so much fun playing together. The end."
+        story = f"Once upon a time, many happy children played together in a sunny park. They laughed on the swings and slid down the big slide. Everyone smiled and had so much fun playing together. The end."
     elif age_choice == "5-6 years":
-        story = f"Once upon a time, a group of cheerful children played in a wonderful playground. They ran across the green grass, climbed on the jungle gym, and pushed each other on the swings. 
-        The children played tag and shared their toys with big smiles. Everyone felt happy and made new friends that day. What a beautiful day at the park it was!"
+        story = f"Once upon a time, a group of cheerful children played in a wonderful playground. They ran across the green grass, climbed on the jungle gym, and pushed each other on the swings. The children played tag and shared their toys with big smiles. Everyone felt happy and made new friends that day. What a beautiful day at the park it was!"
     else:  # 7+ years
-        story = f"Once upon a time, many joyful children gathered at their favorite playground on a bright sunny day. 
-        The park was filled with laughter as they swung into the sky and raced down the twisting slides. Some climbed the rock wall while others played an exciting game of hide-and-seek among the trees. 
-        They took turns on the merry-go-round and helped each other up the climbing net. Every child's face glowed with happiness as they discovered that playing together made everything more fun. 
-        By sunset, they had learned that the best adventures are the ones shared with friends, and they couldn't wait to come back tomorrow."
-    
+        story = f"Once upon a time, many joyful children gathered at their favorite playground on a bright sunny day. The park was filled with laughter as they swung into the sky and raced down the twisting slides. Some climbed the rock wall while others played an exciting game of hide-and-seek among the trees. They took turns on the merry-go-round and helped each other up the climbing net. Every child's face glowed with happiness as they discovered that playing together made everything more fun. By sunset, they had learned that the best adventures are the ones shared with friends, and they couldn't wait to come back tomorrow."    
     return story
 
 def text2audio(story_text):
