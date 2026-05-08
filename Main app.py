@@ -8,11 +8,23 @@ import base64
 
 # Function part
 # img2text
-def img2text(url):
-    image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
-    text = image_to_text_model(url)[0]["generated_text"]
-    return text
+# def img2text(url):
+    #image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    #text = image_to_text_model(url)[0]["generated_text"]
+    #return text
 
+# Image to Text Function
+@st.cache_resource
+def get_img2text_pipe():
+    # Fix: Changed "image-to-text" to "image-captioning" to avoid KeyError
+    return pipeline("image-captioning", model="Salesforce/blip-image-captioning-base")
+
+def img2text(image_obj):
+    pipe = get_img2text_pipe()
+    result = pipe(image_obj)
+    # BLIP model returns a list with a dictionary containing 'generated_text'
+    return result[0]["generated_text"]
+    
 def get_story_pipe():
     # Small, efficient model for Streamlit Cloud deployment
     return pipeline("text-generation", model="gpt2")
