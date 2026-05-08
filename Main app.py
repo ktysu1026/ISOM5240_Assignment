@@ -78,7 +78,7 @@ def main():
     st.write("### Upload a picture to hear a story just for you!")
 
     # Age selection to alter story logic
-    age_choice = st.selectbox(
+    age_range = st.selectbox(
         "How old are you?",
         ["3-4 years", "5-6 years", "7+ years"]
     )
