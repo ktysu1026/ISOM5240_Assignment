@@ -19,9 +19,9 @@ def text2story(description, age_choice):
     # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
     # Build prompt based on age
-    if age_choice == "3-4 years" or age_choice == "3-4":
+    if age_choice == "3-4 years":
         prompt = f"child friendly story about a happy {description}. simple words: "
-    elif age_choice == "5-6 years" or age_choice == "5-6":
+    elif age_choice == "5-6 years":
         prompt = f"adventure story for kids about {description}: "
     else:
         prompt = f"hero story for children about {description}: "
