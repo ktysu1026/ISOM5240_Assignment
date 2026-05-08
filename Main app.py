@@ -36,47 +36,6 @@ def text2audio(story_text):
     audio_output = pipe(story_text)
     return audio_output
     
-# Image to Text Function
-def get_img2text_pipe():
-    # Using 'image-to-text' which is the standard registry for this model
-    return pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
-
-def img2text(image_obj):
-    pipe = get_img2text_pipe()
-    result = pipe(image_obj)
-    # Returns the caption generated from the image [cite: 33]
-    return result[0]["generated_text"]
-    
-def get_story_pipe():
-    # Efficient model for Streamlit Cloud deployment [cite: 36]
-    return pipeline("text-generation", model="gpt2")
-
-def text2story(description, age_range):
-    generator = get_story_pipe()
-    
-    # Custom prompts to satisfy the 3-10 year old age range requirement [cite: 20, 21]
-    prompts = {
-        "3-4": f"Write a very simple, happy story for a toddler about: {description}. Use tiny words.",
-        "5-6": f"Write a fun adventure story for a young child about: {description}.",
-        "7+": f"Write an exciting story for a school kid about: {description}. Make it cool!"
-    }
-    
-    prompt = prompts.get(age_range, prompts["5-6"])
-    
-    # Setting constraints to meet the 50-100 word requirement [cite: 27]
-    # max_new_tokens is set to handle the 100-word limit safely
-    story_output = generator(prompt, max_new_tokens=100, min_new_tokens=60, temperature=0.8, do_sample=True)
-    story_text = story_output[0]['generated_text'].replace(prompt, "").strip()
-    return story_text
-
-# text2audio
-def text2audio(story_text):
-    # Converts story to audio format for an engaging experience [cite: 29, 38]
-    tts = gTTS(text=story_text, lang='en', slow=False)
-    audio_fp = io.BytesIO()
-    tts.write_to_fp(audio_fp)
-    return audio_fp
-
 # def main
 def main(): 
     # Web page name
