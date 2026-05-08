@@ -49,9 +49,9 @@ def main():
     st.write("### Upload a picture to hear a story just for you!")
 
     # Age selection to alter story logic
-    age_range = st.select_slider(
+    age_choice = st.selectbox(
         "How old are you?",
-        options=["3-4", "5-6", "7+"]
+        ["3-4 years", "5-6 years", "7+ years"]
     )
     
      # File uploader for image and audio
