@@ -8,18 +8,34 @@ import base64
 
 # Function part
 # img2text
-# def img2text(url):
-    #image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
-    #text = image_to_text_model(url)[0]["generated_text"]
-    #return text
-# text2story
-# def text2story(text):
-    # story_text = ""   
-    # return story_text
-# def text2audio(story_text):
-    #audio_data = ""    
-    #return audio_data
+def img2text(url):
+    image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    text = image_to_text_model(url)[0]["generated_text"]
+    return text
 
+# text2story
+def text2story(description, age_choice):
+    generator = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
+    
+    # Matching age choice to story styles for kids
+    if age_choice == "3-4 years":
+        prompt = f"child friendly story about a happy {description}. simple words: "
+    elif age_choice == "5-6 years":
+        prompt = f"adventure story for kids about {description}: "
+    else:
+        prompt = f"hero story for children about {description}: "
+    
+    # Requirement: 50-100 words
+    story_results = generator(prompt, max_new_tokens=100, min_new_tokens=50, do_sample=True, temperature=0.7)
+    story = story_results[0]['generated_text'].strip()
+    return story
+
+def text2audio(story_text):
+    # Using the specific model you requested
+    pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    audio_output = pipe(story_text)
+    return audio_output
+    
 # Image to Text Function
 def get_img2text_pipe():
     # Using 'image-to-text' which is the standard registry for this model
