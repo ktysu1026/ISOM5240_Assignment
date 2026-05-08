@@ -4,7 +4,7 @@ from PIL import Image
 from transformers import pipeline
 from io import BytesIO
 import numpy as np
-import scipy.io.wavfile as wav
+from scipy.io import wavfile as wav
 
 # Function part
 # img2text
