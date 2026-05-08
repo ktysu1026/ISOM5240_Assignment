@@ -58,7 +58,7 @@ def text2story(description, age_choice):
         min_new_tokens=int(max_tokens * 0.8),
         do_sample=True, 
         temperature=0.9,  # Lower for more focused stories
-        top_p=0.9,
+        top_p=1.0,
         repetition_penalty=1.2
     )
     
