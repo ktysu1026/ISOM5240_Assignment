@@ -2,8 +2,9 @@
 import streamlit as st
 from PIL import Image
 from transformers import pipeline
-import gtts
 from io import BytesIO
+import numpy as np
+import scipy.io.wavfile as wav
 
 # Function part
 # img2text
@@ -77,10 +78,10 @@ def text2audio(story_text):
     pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
     audio_output = pipe(story_text)
     
-    audio_array = audio_output["audio"]  # This line was over-indented
-    sampling_rate = audio_output["sampling_rate"]  # Same here
+    audio_array = audio_output["audio"]
+    sampling_rate = audio_output["sampling_rate"]
     
-    # Convert to proper format
+    # Convert to proper format (float32 -> int16)
     if audio_array.dtype != np.int16:
         audio_array = (audio_array * 32767).astype(np.int16)
     
