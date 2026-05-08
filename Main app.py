@@ -24,16 +24,24 @@ def text2story(description, age_choice):
     
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
-        prompt = f"Tell a complete short story about a happy {description} in exactly 50 words: "
+        # Focus: Sensory, short, repetitive, and gentle
+        prompt = (f"Write a cozy, colorful story for a toddler about {description}. "
+              f"Include a sound effect like 'Bloop' or 'Pop'. Exactly 50 words: ")
         target_words = 50
-    elif age_choice == "5-6 years":
-        prompt = f"Tell a complete fun story for kids about {description} in exactly 75 words: "
-        target_words = 75
-    else:  # "7+ years"
-        prompt = f"Tell a complete interesting and adventurous story for children about {description} in exactly 100 words: "
-        target_words = 100
 
-     # Load model with specific revision for stability
+    elif age_choice == "5-6 years":
+        # Focus: Action and simple humor
+        prompt = (f"Write a silly, high-energy story for a child about {description}. "
+              f"Include dialogue and a funny surprise. Exactly 75 words: ")
+        target_words = 75
+
+    else: # 7+ years
+        # Focus: Plot, problem-solving, and vivid settings
+        prompt = (f"Write an exciting adventure story about {description}. "
+              f"Start with a problem and end with a clever solution. Exactly 100 words: ")
+        target_words = 100
+     
+    # Load model with specific revision for stability
     generator = pipeline(
         "text-generation", 
         model="pranavpsv/genre-story-generator-v2",
@@ -49,8 +57,9 @@ def text2story(description, age_choice):
         max_new_tokens=max_tokens,
         min_new_tokens=int(max_tokens * 0.8),
         do_sample=True, 
-        temperature=0.7,  # Lower for more focused stories
+        temperature=0.9,  # Lower for more focused stories
         top_p=0.9
+        repetition_penalty=1.2
     )
     
     # Extract story text safely
