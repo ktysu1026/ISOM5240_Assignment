@@ -74,32 +74,21 @@ def text2story(description, age_choice):
         return story
 
 def text2audio(story_text):
-    try:
-        pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
-        audio_output = pipe(story_text)
-        
-        audio_array = audio_output["audio"]
-        sampling_rate = audio_output["sampling_rate"]
-        
-        # Convert to proper format
-        if audio_array.dtype != np.int16:
-            audio_array = (audio_array * 32767).astype(np.int16)
-        
-        buffer = BytesIO()
-        wav.write(buffer, sampling_rate, audio_array)
-        buffer.seek(0)
-        return buffer
-        
-    except Exception as e:
-        # Fallback to gTTS if the pipeline fails
-        print(f"Pipeline failed, using gTTS: {e}")
-        from gtts import gTTS
-        
-        tts = gTTS(text=story_text, lang='en', slow=False)
-        buffer = BytesIO()
-        tts.write_to_fp(buffer)
-        buffer.seek(0)
-        return buffer
+    pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    audio_output = pipe(story_text)
+    
+    audio_array = audio_output["audio"]
+    sampling_rate = audio_output["sampling_rate"]
+    
+    # Convert to proper format
+    if audio_array.dtype != np.int16:
+        audio_array = (audio_array * 32767).astype(np.int16)
+    
+    buffer = BytesIO()
+    wav.write(buffer, sampling_rate, audio_array)
+    buffer.seek(0)
+    return buffer
+
 # def main
 def main(): 
     # Web page name
