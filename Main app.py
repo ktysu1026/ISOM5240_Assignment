@@ -21,13 +21,16 @@ def text2story(description, age_choice):
     # Convert age_range (e.g., "3-4 years") to match expected format
     # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
-    # Clear instruction to write a complete story
+    # Set word count and prompt based on age
     if age_choice == "3-4 years":
-        prompt = f"Tell a complete short story about a happy {description}: "
+        prompt = f"Tell a complete short story about a happy {description} in exactly 50 words: "
+        target_words = 50
     elif age_choice == "5-6 years":
-        prompt = f"Tell a complete fun story for kids about {description}: "
-    else:
-        prompt = f"Tell a complete interesting and adventurous story for children about {description}: "
+        prompt = f"Tell a complete fun story for kids about {description} in exactly 75 words: "
+        target_words = 75
+    else:  # "7+ years"
+        prompt = f"Tell a complete interesting and adventurous story for children about {description} in exactly 100 words: "
+        target_words = 100
 
      # Load model with specific revision for stability
     generator = pipeline(
