@@ -74,8 +74,8 @@ def main():
      # Display image with spinner
     if uploaded_image is not None:
         with st.spinner("Loading image..."):
-        image = Image.open(uploaded_image)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+            image = Image.open(uploaded_image)
+            st.image(image, caption="Uploaded Image", use_column_width=True)
         
         # Combined processing to keep UI clean 
         if st.button("✨ Generate My Story"):
