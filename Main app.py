@@ -63,7 +63,8 @@ def text2story(description, age_choice):
     return story
 
 def text2audio(story_text):
-    pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    try:
+        pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
         audio_output = pipe(story_text)
         
         audio_array = audio_output["audio"]
@@ -88,7 +89,6 @@ def text2audio(story_text):
         tts.write_to_fp(buffer)
         buffer.seek(0)
         return buffer
-    
 # def main
 def main(): 
     # Web page name
