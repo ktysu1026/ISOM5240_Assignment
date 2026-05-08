@@ -39,8 +39,8 @@ def text2story(description, age_choice):
     # Generate with enough tokens for a complete story
     story_results = generator(
         prompt, 
-        max_new_tokens=350,  # Generous limit for 100-150 word story
-        min_new_tokens=150,
+        max_new_tokens=200,  # Generous limit for 100-150 word story
+        min_new_tokens=80,
         do_sample=True, 
         temperature=0.8,  # Slightly higher for more creativity
         top_p=0.9
