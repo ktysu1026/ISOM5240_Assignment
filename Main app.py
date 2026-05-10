@@ -141,7 +141,7 @@ def add_custom_style():
         .stButton>button {
             border-radius: 20px;
             background-color: #FF4B4B;
-            color: white;
+            color: black;
             border: 2px solid #FF4B4B;
             font-weight: bold;
             font-family: 'Fredoka', sans-serif;
