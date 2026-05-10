@@ -112,10 +112,11 @@ def text2audio(story_text):
 def add_custom_style():
     st.markdown(
         """
-        /* Import a bubbly kid-friendly font from Google Fonts */
+        <style>
+        /* 1. Import must be at the very top */
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
 
-        <style>
+        /* 2. Background for the whole app */
         .stApp {
             background-color: #FFDEE9;
             background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
