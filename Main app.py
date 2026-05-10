@@ -133,7 +133,7 @@ def add_custom_style():
 
         /* Make the "Choose a picture" text white too */
         label {
-            color: white !important;
+            color: black !important;
             font-family: 'Fredoka', sans-serif !important;
             font-size: 1.2rem !important;
         }
@@ -141,7 +141,7 @@ def add_custom_style():
         .stButton>button {
             border-radius: 20px;
             background-color: #FF4B4B;
-            color: black;
+            color: white;
             border: 2px solid #FF4B4B;
             font-weight: bold;
             font-family: 'Fredoka', sans-serif;
