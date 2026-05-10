@@ -124,7 +124,7 @@ def add_custom_style():
 
         /* Target the Main Title and the Subheader */
         h1, h3 {
-            color: pink !important;
+            color: White !important;
             font-family: 'Fredoka', sans-serif !important;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Adds a soft shadow so white is easy to read */
         }
