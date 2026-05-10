@@ -24,13 +24,11 @@ def text2story(description, age_choice):
     
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
-        # Focus: shorrt,
-        prompt = (
-            f"Write a tiny story for a toddler. Use only 5 simple sentences.\n"
-            f"Example: The red ball bounced. Boing, boing! It landed in the soft grass. A puppy found the ball. They played all day. The end.\n\n"
-            f"Now write a story about: {description}.\n"
-            f"Story: Once upon a time, there was {description}."
-        )
+        # Focus: short,
+        prompt = (f"Write a tiny, happy story for a toddler about {description}."
+                  f"The story must have 5 sentences and a happy ending."
+                  f"Story: Once upon a time, {description} was very happy. "
+                  f"First,")
         target_words = 50
 
     elif age_choice == "5-6 years":
