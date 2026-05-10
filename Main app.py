@@ -23,8 +23,12 @@ def text2story(description, age_choice):
     # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
     # Set word count and prompt based on age
-    prompt = f"""
-Write a very short and happy children's story about {description}.
+    if age_choice == "3-4 years":
+
+        target_words = 50
+
+        prompt = f"""
+        Write a very short and happy children's story about {description}.
 
 Requirements:
 - Use easy words for toddlers
@@ -95,7 +99,7 @@ Everyone celebrated their adventure together.
 
 Story:
 """
-     
+
     # Load model with specific revision for stability
     generator = pipeline(
         "text-generation", 
