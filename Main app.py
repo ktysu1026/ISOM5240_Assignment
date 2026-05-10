@@ -23,28 +23,78 @@ def text2story(description, age_choice):
     # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
     # Set word count and prompt based on age
-    if age_choice == "3-4 years":
-        # Focus: short,
-        prompt = (f"Write a tiny, happy story for a toddler about {description}."
-                  f"The story must have 5 sentences and a happy ending."
-                  f"Story: Once upon a time, {description} was very happy. "
-                  f"First,")
-        target_words = 50
+    prompt = f"""
+Write a very short and happy children's story about {description}.
+
+Requirements:
+- Use easy words for toddlers
+- Exactly 5 short sentences
+- Clear beginning, middle, and ending
+- Everything must be safe, cheerful, and gentle
+- End with everyone happy
+- No scary, sad, or dangerous events
+
+Example:
+A little bunny found a red ball.
+The bunny bounced the ball with friends.
+They laughed under the sunshine.
+Then they shared yummy snacks together.
+Everyone smiled happily at the end.
+
+Story:
+"""
 
     elif age_choice == "5-6 years":
-        # Focus: Action and simple humor
-        prompt = (f"Instruction: Write a happy, safe, and magical story for a child about {description}.\n"
-                  f"Constraint: No accidents, no sadness, and no scary things. Everything is bright and fun.\n"
-                  f"Style: Adventurous and cheerful. Use words like 'shimmering' and 'brave'.\n"
-                  f"Story Starter: It was a beautiful day for {description}. The sun was warm and everyone was happy. Then,")
+
         target_words = 75
 
-    else: # 7+ years
-        # Focus: Plot, problem-solving, and vivid settings
-        prompt = (f"Instruction: Write an exciting adventure story about {description}.\n"
-                  f"Themes: Friendship, bravery, and solving a secret mystery.\n"
-                  f"Story Starter: Deep inside the heart of the {description}, a secret was waiting to be found.")
-        target_words = 100
+        prompt = f"""
+Write a fun and magical children's story about {description}.
+
+Requirements:
+- Use simple cheerful language
+- Include a beginning, middle, and ending
+- The characters should face a small problem
+- The problem must be solved safely
+- End with everyone happy
+- Avoid scary or sad events
+- About {target_words} words
+
+Example:
+Tom lost his kite in the park.
+He asked his friends for help.
+Together they found it in a tree.
+They laughed and played all afternoon.
+Tom felt happy again.
+
+Story:
+"""
+
+    else:  # 7+ years
+
+        target_words = 120
+
+        prompt = f"""
+Write an exciting adventure story about {description}.
+
+Requirements:
+- Include friendship, bravery, and teamwork
+- Have a clear beginning, middle, and ending
+- Include a mystery or challenge
+- The characters must solve the problem together
+- Keep the story positive and child-friendly
+- End with a happy and complete ending
+- About {target_words} words
+
+Example:
+Mia discovered strange footprints near the old library.
+She asked her friends to help solve the mystery.
+Together they followed clues through the town.
+At the end, they discovered a lost puppy hiding safely.
+Everyone celebrated their adventure together.
+
+Story:
+"""
      
     # Load model with specific revision for stability
     generator = pipeline(
@@ -59,11 +109,11 @@ def text2story(description, age_choice):
     # Generate with appropriate token limits for target word count
     story_results = generator(
         prompt, 
-        max_new_tokens=45,     # Stop before it can get weird
-        do_sample=True, 
-        temperature=0.5,       # Be very literal/simple
-        top_k=30,              # Only choose from the top 30 most likely words
-        repetition_penalty=2.0 # Heavily punish repeating words
+        max_new_tokens = max_tokens,    
+        do_sample=True,
+        temperature=0.7,
+        top_k=50,
+        repetition_penalty=1.5
     )
     
     # Extract story text safely
@@ -75,17 +125,7 @@ def text2story(description, age_choice):
                 story = generated_text[len(prompt):].strip()
             else:
                 story = generated_text.strip()
-        else:
-            story = str(story_results[0])
-    else:
-        # Fallback stories with approximate word counts based on the playground/park scene
-        if age_choice == "3-4 years":
-            story = f"Once upon a time, many happy children played together in a sunny park. They laughed on the swings and slid down the big slide. Everyone smiled and had so much fun playing together. The end."
-        elif age_choice == "5-6 years":
-            story = f"Once upon a time, a group of cheerful children played in a wonderful playground. They ran across the green grass, climbed on the jungle gym, and pushed each other on the swings. The children played tag and shared their toys with big smiles. Everyone felt happy and made new friends that day. What a beautiful day at the park it was!"
-        else:  # 7+ years
-            story = f"Once upon a time, many joyful children gathered at their favorite playground on a bright sunny day. The park was filled with laughter as they swung into the sky and raced down the twisting slides. Some climbed the rock wall while others played an exciting game of hide-and-seek among the trees. They took turns on the merry-go-round and helped each other up the climbing net. Every child's face glowed with happiness as they discovered that playing together made everything more fun. By sunset, they had learned that the best adventures are the ones shared with friends, and they couldn't wait to come back tomorrow."    
-    return story
+   return story
 
 def text2audio(story_text):
     # Initialize pipeline
