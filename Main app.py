@@ -140,7 +140,7 @@ def main():
         
         # Combined processing to keep UI clean 
         if st.button("✨ Generate My Story"):
-            with st.spinner("Magical things are happening...", expanded=False):
+            with st.spinner("Magical things are happening..."):
                 # Step 1: Caption
                 caption = img2text(image)
                 # Step 2: Story
