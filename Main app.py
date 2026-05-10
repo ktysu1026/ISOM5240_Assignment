@@ -28,7 +28,7 @@ def text2story(description, age_choice):
         prompt = (f"Write a cozy, colorful, and positive story for a toddler about {description}. "
               f"Use really simple words that children understand. Be friendly, happy, and fun. "
               f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Exactly 50 words total: ")
+              f"Approximately 50 words total: ")
         target_words = 50
 
     elif age_choice == "5-6 years":
@@ -36,14 +36,14 @@ def text2story(description, age_choice):
         prompt = (f"Write a fun, high-energy, and positive story for a child about {description}. "
               f"Use mostly simple words with just a few slightly more challenging ones. "
               f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Exactly 75 words total: ")
+              f"Approximately 75 words total: ")
         target_words = 75
 
     else: # 7+ years
         # Focus: Plot, problem-solving, and vivid settings
         prompt = (f"Write an exciting, fun, positive story about {description}  with themes like friendship, sports, or school. "
               f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Exactly 100 words total: ")
+              f"Approximately 100 words total: ")
         target_words = 100
      
     # Load model with specific revision for stability
@@ -140,7 +140,7 @@ def main():
         
         # Combined processing to keep UI clean 
         if st.button("✨ Generate My Story"):
-            with st.status("Magical things are happening...", expanded=False):
+            with st.spinner("Magical things are happening...", expanded=False):
                 # Step 1: Caption
                 caption = img2text(image)
                 # Step 2: Story
