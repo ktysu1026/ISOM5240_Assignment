@@ -25,25 +25,23 @@ def text2story(description, age_choice):
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
         # Focus: Sensory, short, repetitive, and gentle
-        prompt = (f"Write a cozy, colorful, and positive story for a toddler about {description}. "
-              f"Use really simple words that children understand. Be friendly, happy, and fun. "
-              f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Approximately 50 words total: ")
+        prompt = (f"Write a cozy, rhythmic, and positive story for a toddler about {description}. "
+              f"Use very simple words and include fun sounds (like 'Beep!' or 'Splash!'). "
+              f"The story must be approximately 50 words and end with a complete, happy sentence.")
         target_words = 50
 
     elif age_choice == "5-6 years":
         # Focus: Action and simple humor
-        prompt = (f"Write a fun, high-energy, and positive story for a child about {description}. "
-              f"Use mostly simple words with just a few slightly more challenging ones. "
-              f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Approximately 75 words total: ")
+        prompt = (f"Write a fun, high-energy story for a child about {description} with a silly twist. "
+              f"Use simple sentences but include three 'sparkle words' (interesting adjectives). "
+              f"The story must be approximately 75 words and have a clear, satisfying conclusion.")
         target_words = 75
 
     else: # 7+ years
         # Focus: Plot, problem-solving, and vivid settings
-        prompt = (f"Write an exciting, fun, positive story about {description}  with themes like friendship, sports, or school. "
-              f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Approximately 100 words total: ")
+        prompt = (f"Write an exciting story about {description} featuring themes of friendship or problem-solving. "
+              f"Focus on vivid descriptions and include one line of character dialogue. "
+              f"The story must be approximately 100 words and end with a complete sentence.")
         target_words = 100
      
     # Load model with specific revision for stability
@@ -111,10 +109,54 @@ def text2audio(story_text):
     buffer.seek(0)
     return buffer
 
+def add_custom_style():
+    st.markdown(
+        """
+        <style>
+        /* This targets the main app window */
+        .stApp {
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                        url("https://www.transparenttextures.com/patterns/stardust.png"),
+                        linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-color: #FFDEE9;
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+        }
+
+        /* Styling the titles to be more bubbly and fun */
+        h1, h2, h3 {
+            color: #FF4B4B !important;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        /* Making the buttons look like magical bubbles */
+        .stButton>button {
+            border-radius: 20px;
+            background-color: #FF4B4B;
+            color: white;
+            border: 2px solid #FF4B4B;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .stButton>button:hover {
+            background-color: #FF8E8E;
+            border-color: #FF8E8E;
+            transform: scale(1.05);
+        }
+        </style>
+        """,
+        unsafe_output_code=True
+    )
+    
 # def main
 def main(): 
-    # Web page name
+    
+    # 1. Config and Style
     st.set_page_config(page_title="Magic Storybook", page_icon="🎨")
+    add_custom_style() # This adds the colors and stars!
+    
+    st.title("🎨 My Magic Storybook")
+    st.write("### 🌟 Upload a picture to hear a story just for you!")
     
     # App title
     # Clean UI for children
