@@ -43,7 +43,7 @@ def text2story(description, age_choice):
         # Focus: Plot, problem-solving, and vivid settings
         prompt = (f"Write an exciting, fun, positive story about {description}  with themes like friendship, sports, or school. "
               f"Make sure the story has a clear finish and ends with a complete sentence. "
-              f"Exactly 200 words total: "))
+              f"Exactly 100 words total: ")
         target_words = 100
      
     # Load model with specific revision for stability
