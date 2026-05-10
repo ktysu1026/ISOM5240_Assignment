@@ -39,8 +39,8 @@ Requirements:
 - No scary, sad, or dangerous events
 
 Example:
-A little bunny found a red ball.
-The bunny bounced the ball with friends.
+A little girl found a red ball.
+The girl bounced the ball with friends.
 They laughed under the sunshine.
 Then they shared yummy snacks together.
 Everyone smiled happily at the end.
@@ -108,16 +108,19 @@ Story:
     )
     
    # Adjust max_new_tokens based on word target (roughly 1.3 tokens per word)
-    max_tokens = int(target_words * 1.3)
+    max_tokens = int(target_words * 1.5)
+    min_tokens = int(target_words * 0.7)
     
     # Generate with appropriate token limits for target word count
     story_results = generator(
         prompt, 
-        max_new_tokens = max_tokens,    
-        do_sample=True,
+        max_new_tokens=max_tokens,
+        min_new_tokens=min_tokens,
         temperature=0.7,
-        top_k=50,
-        repetition_penalty=1.5
+        top_k=40,
+        top_p=0.9,
+        repetition_penalty=1.3,
+         early_stopping=True
     )
     
     # Extract story text safely
