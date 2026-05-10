@@ -13,14 +13,15 @@ def img2text(url):
     text = image_to_text_model(url)[0]["generated_text"]
     return text
 
-# Difficulties faced during project:
+# Difficulties faced during the assignment:
 # Story not finished: asked LLM, potential method to solve is to add tokens or add parameters to the generator of text2story function
 # to encourage completion. 
+# Model works better with few-shot prompting
 
 # text2story
 def text2story(description, age_choice):
     # Convert age_range (e.g., "3-4 years") to match expected format
-    # Your main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
+    # Main passes age_range which might be "3-4 years", "5-6 years", or "7+ years"
     
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
@@ -107,20 +108,20 @@ Story:
         revision="main"
     )
     
-   # Adjust max_new_tokens based on word target (roughly 1.3 tokens per word)
+   # Adjust max_new_tokens and min_new_tokens based on word target
     max_tokens = int(target_words * 1.5)
     min_tokens = int(target_words * 0.7)
     
     # Generate with appropriate token limits for target word count
     story_results = generator(
         prompt, 
-        max_new_tokens=max_tokens,
+        max_new_tokens=max_tokens, 
         min_new_tokens=min_tokens,
         temperature=0.7,
         top_k=40,
         top_p=0.9,
         repetition_penalty=1.3,
-         early_stopping=True
+        early_stopping=True
     )
     
     # Extract story text safely
@@ -175,11 +176,18 @@ Story:
     return story
 
 def text2audio(story_text):
-    # Initialize pipeline
+    # Initialize pipeline, convert text into spoken audio
     pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+
+    # Output contains:
+    # - audio array
+    # - sampling rate
     audio_output = pipe(story_text)
-    
+
+    # Extract raw audio waveform
     audio_array = audio_output["audio"]
+    
+    # Extract sample rate (e.g., 16000 Hz)
     sampling_rate = int(audio_output["sampling_rate"]) # Ensure this is an int
     
     # 1. Handle potential 2D output (squeeze to 1D if necessary)
@@ -191,12 +199,22 @@ def text2audio(story_text):
         audio_array = np.clip(audio_array, -1.0, 1.0)
         audio_array = (audio_array * 32767).astype(np.int16)
     
+    # BytesIO lets us store the audio
+    # temporarily in memory instead of
+    # saving directly to disk.
     buffer = BytesIO()
+    
     # Scipy expects (buffer, rate, data)
-    wav.write(buffer, sampling_rate, audio_array)
-    buffer.seek(0)
+    wav.write(buffer, sampling_rate, audio_array) # Write WAV audio into memory buffer
+    buffer.seek(0)   # Move pointer back to start of file
     return buffer
 
+# This function adds:
+# - Custom background colors
+# - Google fonts
+# - Styled buttons
+# - Decorative emojis
+# - Better text appearance
 def add_custom_style():
     st.markdown(
         """
@@ -248,7 +266,7 @@ def add_custom_style():
 # def main
 def main(): 
     
-    # 1. Config and Style
+    # Config and Style: Sets browser tab title and emoji icon
     st.set_page_config(page_title="Magic Storybook", page_icon="🎨")
     add_custom_style() # This adds the colors and stars!
     
@@ -256,7 +274,7 @@ def main():
     # Clean UI for children
     st.title("🎨 My Magic Storybook")
     
-    # Write some text
+    # Write small subtitle/instructions
     st.write("### Upload a picture to hear a story just for you!")
 
     # Age selection to alter story logic
