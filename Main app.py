@@ -123,7 +123,7 @@ def add_custom_style():
 
         /* Target the Main Title and the Subheader */
         h1, h3 {
-            color: white !important;
+            color: pink !important;
             font-family: 'Fredoka', sans-serif !important;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Adds a soft shadow so white is easy to read */
         }
@@ -142,6 +142,14 @@ def add_custom_style():
             border: 2px solid #FF4B4B;
             font-weight: bold;
             font-family: 'Fredoka', sans-serif;
+        }
+        .stApp::before {
+            content: "✨ 🦁 🎨 🌟";
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.5;
         }
         </style>
         """,
