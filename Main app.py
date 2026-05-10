@@ -145,7 +145,7 @@ def add_custom_style():
         }
         </style>
         """,
-        unsafe_output_code=True
+        unsafe_allow_html=True
     )
     
 # def main
