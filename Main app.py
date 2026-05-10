@@ -25,23 +25,24 @@ def text2story(description, age_choice):
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
         # Focus: shorrt,
-        prompt = (f"Write a short, fun, and positive story for a toddler about {description}. "
-              f"Use very simple words and include fun sounds (like 'Beep!' or 'Splash!'). "
-              f"The story must be approximately 50 words and end with a complete, happy sentence.")
+        prompt = (f"Instruction: Write a very simple toddler story about {description}.\n"
+                  f"Style: Cozy, fun sounds like 'Zoom!' and 'Yay!'.\n"
+                  f"Length: 5 sentences.\n\n"
+                  f"Story: Once upon a time, {description}")
         target_words = 50
 
     elif age_choice == "5-6 years":
         # Focus: Action and simple humor
-        prompt = (f"Write a fun, high-energy story for a child about {description} with a silly twist. "
-              f"Use simple sentences but include three 'sparkle words' (interesting adjectives). "
-              f"The story must be approximately 75 words and have a clear, satisfying conclusion.")
+        prompt = (f"Instruction: Write a fun, high-energy story for a child about {description}.\n"
+                  f"Style: Positive, adventurous, and bright. Use 'sparkle words' like shimmering, brave, or golden.\n"
+                  f"Story Starter: The sun was shining on the {description} as a new adventure began. First,")
         target_words = 75
 
     else: # 7+ years
         # Focus: Plot, problem-solving, and vivid settings
-        prompt = (f"Write an exciting story about {description} featuring themes of friendship or problem-solving. "
-              f"Focus on vivid descriptions and include one line of character dialogue. "
-              f"The story must be approximately 100 words and end with a complete sentence.")
+        prompt = (f"Instruction: Write an exciting adventure story about {description}.\n"
+                  f"Themes: Friendship, bravery, and solving a secret mystery.\n"
+                  f"Story Starter: Deep inside the heart of the {description}, a secret was waiting to be found.")
         target_words = 100
      
     # Load model with specific revision for stability
