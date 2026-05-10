@@ -147,8 +147,6 @@ def main():
                 story = text2story(caption, age_range)
                 # Step 3: Audio
                 audio_data = text2audio(story)
-                
-                status.close()  # Immediately removes the status widget
             
             # Display Results
             st.subheader("📖 Your Story")
