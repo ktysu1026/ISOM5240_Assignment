@@ -129,7 +129,47 @@ Story:
                 story = generated_text[len(prompt):].strip()
             else:
                 story = generated_text.strip()
-   return story
+    # -----------------------------
+    # FALLBACK IF EMPTY
+    # -----------------------------
+    if not story:
+
+        if age_choice == "3-4 years":
+
+            story = (
+            "A happy little bunny played with a red ball in the sunshine. "
+            "Two friendly birds came to play too. "
+            "They laughed and hopped around together. "
+            "Then they shared sweet berries under a tree. "
+            "Everyone smiled happily at the end."
+            )
+
+        elif age_choice == "5-6 years":
+
+            story = (
+            "One sunny morning, Mia brought her favorite teddy bear to the playground. "
+            "She worried the teddy might get dirty while everyone played. "
+            "Her friends helped build a tiny blanket house to keep it safe. "
+            "Soon everyone played together carefully and kindly. "
+            "Mia learned that sharing with good friends makes every day more fun."
+            )
+
+        else:
+
+            story = (
+            "Deep in the magical forest, four brave friends discovered glowing footprints beside an ancient tree. "
+            "They followed the mysterious trail while solving fun riddles together. "
+            "At the end of the path, they found a lost baby owl hiding safely inside a hollow log. "
+            "Working together, they returned the owl to its family high above the forest. "
+            "The friends celebrated their adventure proudly as the stars sparkled brightly overhead."
+            )
+
+    # -----------------------------
+    # CLEAN FINAL OUTPUT
+    # -----------------------------
+    story = story.replace("\n", " ").strip()
+
+    return story
 
 def text2audio(story_text):
     # Initialize pipeline
