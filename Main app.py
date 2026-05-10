@@ -112,36 +112,36 @@ def text2audio(story_text):
 def add_custom_style():
     st.markdown(
         """
+        /* Import a bubbly kid-friendly font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+
         <style>
-        /* This targets the main app window */
         .stApp {
-            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                        url("https://www.transparenttextures.com/patterns/stardust.png"),
-                        linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             background-color: #FFDEE9;
             background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
         }
 
-        /* Styling the titles to be more bubbly and fun */
-        h1, h2, h3 {
-            color: #FF4B4B !important;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+        /* Target the Main Title and the Subheader */
+        h1, h3 {
+            color: white !important;
+            font-family: 'Fredoka', sans-serif !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Adds a soft shadow so white is easy to read */
         }
 
-        /* Making the buttons look like magical bubbles */
+        /* Make the "Choose a picture" text white too */
+        label {
+            color: white !important;
+            font-family: 'Fredoka', sans-serif !important;
+            font-size: 1.2rem !important;
+        }
+
         .stButton>button {
             border-radius: 20px;
             background-color: #FF4B4B;
             color: white;
             border: 2px solid #FF4B4B;
             font-weight: bold;
-            transition: 0.3s;
-        }
-        
-        .stButton>button:hover {
-            background-color: #FF8E8E;
-            border-color: #FF8E8E;
-            transform: scale(1.05);
+            font-family: 'Fredoka', sans-serif;
         }
         </style>
         """,
@@ -154,9 +154,6 @@ def main():
     # 1. Config and Style
     st.set_page_config(page_title="Magic Storybook", page_icon="🎨")
     add_custom_style() # This adds the colors and stars!
-    
-    st.title("🎨 My Magic Storybook")
-    st.write("### 🌟 Upload a picture to hear a story just for you!")
     
     # App title
     # Clean UI for children
