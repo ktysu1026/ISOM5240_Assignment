@@ -25,20 +25,25 @@ def text2story(description, age_choice):
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
         # Focus: Sensory, short, repetitive, and gentle
-        prompt = (f"Write a cozy, colorful story for a toddler about {description}. "
-              f"Include a sound effect like 'Bloop' or 'Pop'. Exactly 50 words: ")
+        prompt = (f"Write a cozy, colorful, and positive story for a toddler about {description}. "
+              f"Use really simple words that children understand. Be friendly, happy, and fun. "
+              f"Make sure the story has a clear finish and ends with a complete sentence. "
+              f"Exactly 50 words total: ")
         target_words = 50
 
     elif age_choice == "5-6 years":
         # Focus: Action and simple humor
-        prompt = (f"Write a silly, high-energy story for a child about {description}. "
-              f"Include dialogue and a funny surprise. Exactly 75 words: ")
+        prompt = (f"Write a fun, high-energy, and positive story for a child about {description}. "
+              f"Use mostly simple words with just a few slightly more challenging ones. "
+              f"Make sure the story has a clear finish and ends with a complete sentence. "
+              f"Exactly 75 words total: ")
         target_words = 75
 
     else: # 7+ years
         # Focus: Plot, problem-solving, and vivid settings
-        prompt = (f"Write an exciting adventure story about {description}. "
-              f"Start with a problem and end with a clever solution. Exactly 100 words: ")
+        prompt = (f"Write an exciting, fun, positive story about {description}  with themes like friendship, sports, or school. "
+              f"Make sure the story has a clear finish and ends with a complete sentence. "
+              f"Exactly 200 words total: "))
         target_words = 100
      
     # Load model with specific revision for stability
@@ -142,6 +147,8 @@ def main():
                 story = text2story(caption, age_range)
                 # Step 3: Audio
                 audio_data = text2audio(story)
+                
+                status.close()  # Immediately removes the status widget
             
             # Display Results
             st.subheader("📖 Your Story")
