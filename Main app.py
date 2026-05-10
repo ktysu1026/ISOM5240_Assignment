@@ -33,9 +33,10 @@ def text2story(description, age_choice):
 
     elif age_choice == "5-6 years":
         # Focus: Action and simple humor
-        prompt = (f"Instruction: Write a fun, high-energy story for a child about {description}.\n"
-                  f"Style: Positive, adventurous, and bright. Use 'sparkle words' like shimmering, brave, or golden.\n"
-                  f"Story Starter: The sun was shining on the {description} as a new adventure began. First,")
+        prompt = (f"Instruction: Write a happy, safe, and magical story for a child about {description}.\n"
+                  f"Constraint: No accidents, no sadness, and no scary things. Everything is bright and fun.\n"
+                  f"Style: Adventurous and cheerful. Use words like 'shimmering' and 'brave'.\n"
+                  f"Story Starter: It was a beautiful day for {description}. The sun was warm and everyone was happy. Then,")
         target_words = 75
 
     else: # 7+ years
