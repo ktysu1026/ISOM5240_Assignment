@@ -25,10 +25,12 @@ def text2story(description, age_choice):
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
         # Focus: shorrt,
-        prompt = (f"Instruction: Write a very simple toddler story about {description}.\n"
-                  f"Style: Cozy, fun sounds like 'Zoom!' and 'Yay!'.\n"
-                  f"Length: 5 sentences.\n\n"
-                  f"Story: Once upon a time, {description}")
+        prompt = (
+            f"Write a tiny story for a toddler. Use only 5 simple sentences.\n"
+            f"Example: The red ball bounced. Boing, boing! It landed in the soft grass. A puppy found the ball. They played all day. The end.\n\n"
+            f"Now write a story about: {description}.\n"
+            f"Story: Once upon a time, there was {description}."
+        )
         target_words = 50
 
     elif age_choice == "5-6 years":
@@ -59,12 +61,11 @@ def text2story(description, age_choice):
     # Generate with appropriate token limits for target word count
     story_results = generator(
         prompt, 
-        max_new_tokens=max_tokens,
-        min_new_tokens=int(max_tokens * 0.8),
+        max_new_tokens=45,     # Stop before it can get weird
         do_sample=True, 
-        temperature=0.9,  # Lower for more focused stories
-        top_p=1.0,
-        repetition_penalty=1.2
+        temperature=0.5,       # Be very literal/simple
+        top_k=30,              # Only choose from the top 30 most likely words
+        repetition_penalty=2.0 # Heavily punish repeating words
     )
     
     # Extract story text safely
