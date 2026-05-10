@@ -24,8 +24,8 @@ def text2story(description, age_choice):
     
     # Set word count and prompt based on age
     if age_choice == "3-4 years":
-        # Focus: Sensory, short, repetitive, and gentle
-        prompt = (f"Write a cozy, rhythmic, and positive story for a toddler about {description}. "
+        # Focus: shorrt,
+        prompt = (f"Write a short, fun, and positive story for a toddler about {description}. "
               f"Use very simple words and include fun sounds (like 'Beep!' or 'Splash!'). "
               f"The story must be approximately 50 words and end with a complete, happy sentence.")
         target_words = 50
